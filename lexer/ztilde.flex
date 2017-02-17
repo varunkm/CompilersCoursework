@@ -20,10 +20,12 @@ NotLineTerminator = [^\r\n\r\n]
 MLComment = \/#(.|{LineTerminator})*#\/
 Whitespace = {LineTerminator} | [ \t\f]
 Underscore = _
+Punctuation = [\s!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 
 %%
+{SLCommentBegin}({NotLineTerminator})*{LineTerminator} {}
 {MLComment}       { //dont do shit}
-";"               { System.out.printf("SEMICOLON [%s]\n",yytext());}
+";"               { System.out.printf("SEMICOLON [%s]\n",ytext());}
 ","               { System.out.printf("COMMA [%s]\n",yytext());}
 "("               { System.out.printf("LPAR [%s]\n",yytext());}
 ")"               { System.out.printf("RPAR [%s]\n",yytext());}
@@ -76,8 +78,7 @@ Underscore = _
 "null"           { System.out.printf("NULL [%s]\n",yytext());}
 T|F              { System.out.printf("BOOL_LIT [%s]\n",yytext());}
 
-
-{SLCommentBegin}({NotLineTerminator})*{LineTerminator} {}
+{Punctuation} 	 { System.out.printf("PUNCTUATION [%s]\n", yytext());}
 
 {Whitespace}    {/* Do nothing! */}
 {LoopBegin}     {System.out.printf("LoopBegin [%s]\n", yytext());}
