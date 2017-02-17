@@ -1,0 +1,18 @@
+main { # Main is not necessarily last.
+     a : seq<int> := [1,2,3];
+     b : seq<int> := ?T?reverse(a); # This is a declaration.
+     print b; # This is the required statement.
+};
+
+fdef reverse (inseq : seq<top>) {
+     outseq : seq<top> := [];
+     i : int := 0;
+     loop
+        if (inseq.len <= i) then
+           break;
+        fi
+        outseq := inseq[i] :: outseq;
+        i := i + 1;
+     pool
+     return outseq;
+} : seq<top> ;
