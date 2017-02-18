@@ -4,28 +4,26 @@
 %line
 %column
 
-LoopBegin = loop
-LoopEnd = pool
 Digit = [0-9]
 Letter = [a-zA-Z]
-OpenBrace = \{
-CloseBrace = \}
-Assignment = :=
 TypeSpec = :
-LParen = \(
-RParen = \)
-SLCommentBegin = #
+SLComment = #({NotLineTerminator})*{LineTerminator}
 LineTerminator = \r|\n|\r\n|\n\r
 NotLineTerminator = [^\r\n\r\n]
 MLComment = \/#(.|{LineTerminator})*#\/
 Whitespace = {LineTerminator} | [ \t\f]
 Underscore = _
-Punctuation = [\s!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
+Punctuation = [ !#\"\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
+Char = \'({Letter}|{Punctuation}|{Digit})\'
+Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
+Integer = -?(0|([1-9]({Digit})*))
+Float = {Integer}\.({Digit}({Digit})*)
+Rational = ({Integer}\/([1-9]([0-9])*))|({Integer}_(([1-9]([0-9])*)\/([1-9]([0-9])*)))
 
 %%
-{SLCommentBegin}({NotLineTerminator})*{LineTerminator} {}
-{MLComment}       { //dont do shit}
-";"               { System.out.printf("SEMICOLON [%s]\n",ytext());}
+{SLComment} 	  {}
+{MLComment}       {}
+";"               { System.out.printf("SEMICOLON [%s]\n",yytext());}
 ","               { System.out.printf("COMMA [%s]\n",yytext());}
 "("               { System.out.printf("LPAR [%s]\n",yytext());}
 ")"               { System.out.printf("RPAR [%s]\n",yytext());}
@@ -77,14 +75,14 @@ Punctuation = [\s!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 
 "null"           { System.out.printf("NULL [%s]\n",yytext());}
 T|F              { System.out.printf("BOOL_LIT [%s]\n",yytext());}
+{Char} 	 		 { System.out.printf("CHAR_LIT [%s]\n", yytext());}
+{Integer}		 { System.out.printf("INT_LIT [%s]\n", yytext());}
+{Float}			 { System.out.printf("FLOAT_LIT [%s]\n", yytext());}
+{Rational} 		 { System.out.printf("RAT_LIT [%s]\n", yytext());}
 
-{Punctuation} 	 { System.out.printf("PUNCTUATION [%s]\n", yytext());}
 
 {Whitespace}    {/* Do nothing! */}
-{LoopBegin}     {System.out.printf("LoopBegin [%s]\n", yytext());}
-{LoopEnd}     {System.out.printf("LoopEnd [%s]\n", yytext());}
 {Digit}+        {System.out.printf("number [%s]\n", yytext());}
-{Letter}({Letter}|{Digit}|{Underscore})*   {System.out.printf("identifier [%s]\n",yytext());}
-{Assignment}                               {System.out.printf("Assignment [%s]\n", yytext());}
-{TypeSpec}                                 {System.out.printf("TypeSpec [%s]\n", yytext());}
-.                                          {System.out.printf("Unidentified [%s]\n", yytext());}
+{Identifier}    {System.out.printf("identifier [%s]\n",yytext());}
+{TypeSpec}      {System.out.printf("TypeSpec [%s]\n", yytext());}
+.               {System.out.printf("Unidentified [%s]\n", yytext());}
