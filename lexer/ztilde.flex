@@ -1,6 +1,6 @@
 %%
-%class LexZTilde
-%standalone
+%class Lexer
+%unicode
 %line
 %column
 
@@ -42,15 +42,17 @@ NRational = -{PRational}
 "/"               { System.out.printf("DIV [%s]\n", yytext()); }
 "%"               { System.out.printf("MOD [%s]\n", yytext()); }
 "<="              { System.out.printf("LEQ [%s]\n", yytext()); }
-">="              { System.out.printf("GTQ [%s]\n", yytext()); }
+">="			  { System.out.printf("GEQ [%s]\n", yytext()); }
+"=>"              { System.out.printf("IMPLICATION [%s]\n", yytext()); }
 "=="              { System.out.printf("EQ  [%s]\n", yytext()); }
 "!="              { System.out.printf("NEQ [%s]\n", yytext()); }
-"<"               { System.out.printf("LT  [%s]\n", yytext()); }
-">"               { System.out.printf("GT  [%s]\n", yytext()); }
+"<"               { System.out.printf("LT [%s]\n", yytext()); }
+">"				  { System.out.printf("GT [%s]\n", yytext()); }
 "&&"              { System.out.printf("AND [%s]\n", yytext()); }
 "||"              { System.out.printf("OR  [%s]\n", yytext()); }
 "!"               { System.out.printf("NOT [%s]\n", yytext()); }
 "::"			  { System.out.printf("DOUBLECOLON [%s]\n", yytext()); }
+"?"				  { System.out.printf("QM [%s]\n", yytext()); }
 
 "fdef"            { System.out.printf("FDEF [%s]\n", yytext()); }
 "main"            { System.out.printf("MAIN [%s]\n", yytext()); }
@@ -79,7 +81,8 @@ NRational = -{PRational}
                  
 
 "null"            { System.out.printf("NULL [%s]\n", yytext()); }
-T|F               { System.out.printf("BOOL_LIT [%s]\n", yytext()); }
+T                 { System.out.printf("TRUE [%s]\n", yytext()); }
+F 				  { System.out.printf("FALSE [%s]\n", yynext()); }
 {Char} 	 		  { System.out.printf("CHAR_LIT [%s]\n", yytext()); }
 {PInteger}		  { System.out.printf("PINT_LIT [%s]\n", yytext()); }
 {PFloat}		  { System.out.printf("PFLOAT_LIT [%s]\n", yytext()); }
