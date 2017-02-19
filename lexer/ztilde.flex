@@ -1,6 +1,6 @@
 %%
 %class Lexer
-%unicode
+%standalone
 %line
 %column
 
@@ -82,7 +82,7 @@ NRational = -{PRational}
 
 "null"            { System.out.printf("NULL [%s]\n", yytext()); }
 T                 { System.out.printf("TRUE [%s]\n", yytext()); }
-F 				  { System.out.printf("FALSE [%s]\n", yynext()); }
+F 				  { System.out.printf("FALSE [%s]\n", yytext()); }
 {Char} 	 		  { System.out.printf("CHAR_LIT [%s]\n", yytext()); }
 {PInteger}		  { System.out.printf("PINT_LIT [%s]\n", yytext()); }
 {PFloat}		  { System.out.printf("PFLOAT_LIT [%s]\n", yytext()); }

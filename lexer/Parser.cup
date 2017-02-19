@@ -61,7 +61,7 @@ operator ::= PLUS | MINUS | DIV | MOD | POWER | EQ | LEQ | GEQ | LT | GT | AND |
 
 numeric ::= PINT_LIT | NINT_LIT | PFLOAT_LIT | NFLOAT_LIT | PRAT_LIT | NRAT_LIT;
 
-function_call ::= IDENT LPAR expressions RPAR SEMICOLON | IDENT LPAR RPAR SEMICOLON;
+function_call ::= IDENT LPAR expressions RPAR SEMICOLON | IDENT LPAR RPAR SEMICOLON | QM bool_lit QM IDENT LPAR expressions RPAR SEMICOLON | QM bool_lit QM IDENT LPAR RPAR SEMICOLON;
 
 nested_id ::= IDENT | nested_id DOT IDENT;
 
