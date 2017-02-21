@@ -60,7 +60,7 @@ Comment = {SLComment}|{MLComment}
 	"<="              { return symbol(sym.LEQ); }
 	">="			  { return symbol(sym.GEQ); }
 	"=>"              { return symbol(sym.IMPLICATION); }
-	"=="              { return symbol(sym.EQ); }
+	"="              { return symbol(sym.EQ); }
 	"!="              { return symbol(sym.NEQ); }
 	"<"               { return symbol(sym.LT); }
 	">"				  { return symbol(sym.GT); }
