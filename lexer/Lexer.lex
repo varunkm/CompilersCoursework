@@ -30,6 +30,7 @@ Whitespace = {LineTerminator} | [ \t\f]
 Underscore = _
 Punctuation = [ !#\"\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 Char = \'({Letter}|{Punctuation}|{Digit})\'
+String = \"({Letter}|{Punctuation}|{Digit})*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
 PInteger = (0|([1-9]({Digit})*))
 NInteger = -{PInteger}
@@ -100,6 +101,7 @@ Comment = {SLComment}|{MLComment}
 	"null"            { return symbol(sym.NULL); }
 	T|F               { return symbol(sym.BOOL_LIT, yytext()); }
 	{Char} 	 		  { return symbol(sym.CHAR_LIT, yytext()); }
+        {String}                  { return symbol(sym.STRING_LIT, yytext()); }
 	{PInteger}		  { return symbol(sym.PINT_LIT, yytext()); }
 	{PFloat}		  { return symbol(sym.PFLOAT_LIT, yytext()); }
 	{PRational} 	  { return symbol(sym.PRAT_LIT, yytext()); }

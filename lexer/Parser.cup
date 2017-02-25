@@ -27,7 +27,7 @@ scan with
 	return lexer.next_token();
 :};
 
-terminal MAIN, NULL, BOOL_LIT, NINT_LIT, NRAT_LIT, NFLOAT_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_LIT, BOOL, CHAR, INT, RAT, FLOAT, TOP, DICT, SEQ, TDEF, FDEF, ALIAS, START_IF, END_IF, ELSE, THEN, READ, PRINT, RETURN, LEN, LEQ, LT, GEQ, GT, IMPLICATION, EQ, NEQ, LCRBRA, RCRBRA, LSQBRA, RSQBRA, TYPESPEC, SEMICOLON, PLUS, MINUS, MULT, DIV, POWER, MOD, NOT, AND, OR, DOUBLECOLON, IN, IDENT, COMMA, LPAR, RPAR, DOT, LOOP_START, LOOP_END, BREAK, ASSIGN, QM;
+terminal MAIN, NULL, BOOL_LIT, NINT_LIT, NRAT_LIT, NFLOAT_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_LIT, BOOL, CHAR, INT, RAT, FLOAT, TOP, DICT, SEQ, TDEF, FDEF, ALIAS, START_IF, END_IF, ELSE, THEN, READ, PRINT, RETURN, LEN, LEQ, LT, GEQ, GT, IMPLICATION, EQ, NEQ, LCRBRA, RCRBRA, LSQBRA, RSQBRA, TYPESPEC, SEMICOLON, PLUS, MINUS, MULT, DIV, POWER, MOD, NOT, AND, OR, DOUBLECOLON, IN, IDENT, COMMA, LPAR, RPAR, DOT, LOOP_START, LOOP_END, BREAK, ASSIGN, QM;
 
 terminal BADCHAR;
 
@@ -65,7 +65,7 @@ expressions ::= expression | expressions COMMA expression;
 
 statement ::= null_expression SEMICOLON | decleration | nested_id ASSIGN expression SEMICOLON | PRINT expression SEMICOLON | READ nested_id SEMICOLON | START_IF LPAR expression RPAR THEN statements END_IF | START_IF LPAR expression RPAR THEN statements ELSE statements END_IF | LOOP_START statements BREAK SEMICOLON statements LOOP_END | LOOP_START statements BREAK PINT_LIT SEMICOLON statements LOOP_END | LOOP_START statements LOOP_END | RETURN expression SEMICOLON | ALIAS type type SEMICOLON | type_creation;
 
-expression ::= nested_id | numeric | CHAR_LIT | BOOL_LIT | IDENT DOT LEN | expression operator expression | NOT expression | LPAR expression RPAR | function_call | LSQBRA expression RSQBRA | LSQBRA RSQBRA | nested_id index | IDENT IN nested_id | LCRBRA key_vals RCRBRA | LCRBRA RCRBRA;
+expression ::= nested_id | numeric | STRING_LIT | CHAR_LIT | BOOL_LIT | IDENT DOT LEN | expression operator expression | NOT expression | LPAR expression RPAR | function_call | LSQBRA expressions RSQBRA | LSQBRA RSQBRA | nested_id index | IDENT IN nested_id | LCRBRA key_vals RCRBRA | LCRBRA RCRBRA;
 
 operator ::= PLUS | MINUS | DIV | MOD | POWER | EQ | LEQ | GEQ | LT | GT | AND | OR | DOUBLECOLON | IMPLICATION | MULT | NEQ;
 
