@@ -43,40 +43,120 @@ precedence left LPAR, RPAR;
 
 start_state ::= functions main functions;
 
-functions ::= functions func | functions decleration | functions type_creation | functions alias | ;
+functions ::= functions func 
+		| functions decleration 
+		| functions type_creation 
+		| functions alias 
+		| ;
 
 main ::= MAIN LCRBRA statements RCRBRA SEMICOLON;
 
-func ::= FDEF IDENT LPAR args RPAR LCRBRA statements RCRBRA TYPESPEC type SEMICOLON | FDEF IDENT LPAR RPAR LCRBRA statements RCRBRA TYPESPEC type SEMICOLON | FDEF IDENT LPAR RPAR LCRBRA RCRBRA TYPESPEC type SEMICOLON | FDEF IDENT LPAR args RPAR LCRBRA RCRBRA TYPESPEC type SEMICOLON;
+func ::= FDEF IDENT LPAR args RPAR LCRBRA statements RCRBRA TYPESPEC type SEMICOLON 
+		| FDEF IDENT LPAR RPAR LCRBRA statements RCRBRA TYPESPEC type SEMICOLON 
+		| FDEF IDENT LPAR RPAR LCRBRA RCRBRA TYPESPEC type SEMICOLON 
+		| FDEF IDENT LPAR args RPAR LCRBRA RCRBRA TYPESPEC type SEMICOLON;
 
-decleration ::= IDENT TYPESPEC type SEMICOLON | IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
+decleration ::= IDENT TYPESPEC type SEMICOLON 
+		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
 
-type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON | TDEF IDENT LCRBRA RCRBRA SEMICOLON;
+type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON 
+		| TDEF IDENT LCRBRA RCRBRA SEMICOLON;
 
 alias ::= ALIAS type IDENT SEMICOLON;
 
-statements ::= statements statement | statement;
+statements ::= statements statement 
+		| statement;
 
-args ::= IDENT TYPESPEC type | args COMMA IDENT TYPESPEC type;
+args ::= IDENT TYPESPEC type 
+		| args COMMA IDENT TYPESPEC type;
 
-type ::= INT | FLOAT | RAT | BOOL | CHAR | DICT LT type COMMA type GT | DICT LT TOP COMMA type GT | DICT LT type COMMA TOP GT | SEQ LT type GT | SEQ LT TOP GT | IDENT;
+type ::= INT 
+		| FLOAT 
+		| RAT 
+		| BOOL 
+		| CHAR 
+		| DICT LT type COMMA type GT 
+		| DICT LT TOP COMMA type GT 
+		| DICT LT type COMMA TOP GT 
+		| SEQ LT type GT 
+		| SEQ LT TOP GT 
+		| IDENT;
 
-expressions ::= expression | expressions COMMA expression;
+expressions ::= expression 
+		| expressions COMMA expression;
 
-statement ::= null_expression SEMICOLON | decleration | nested_id ASSIGN expression SEMICOLON | PRINT expression SEMICOLON | READ nested_id SEMICOLON | START_IF LPAR expression RPAR THEN statements END_IF | START_IF LPAR expression RPAR THEN statements ELSE statements END_IF | LOOP_START statements BREAK SEMICOLON statements LOOP_END | LOOP_START statements BREAK PINT_LIT SEMICOLON statements LOOP_END | LOOP_START statements LOOP_END | RETURN expression SEMICOLON | ALIAS type type SEMICOLON | type_creation;
+statement ::= null_expression SEMICOLON 
+		| decleration 
+		| nested_id ASSIGN expression SEMICOLON 
+		| PRINT expression SEMICOLON 
+		| READ nested_id SEMICOLON 
+		| START_IF LPAR expression RPAR THEN statements END_IF 
+		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF 
+		| LOOP_START statements BREAK SEMICOLON statements LOOP_END 
+		| LOOP_START statements BREAK PINT_LIT SEMICOLON statements LOOP_END 
+		| LOOP_START statements LOOP_END
+                | RETURN SEMICOLON
+		| RETURN expression SEMICOLON 
+		| ALIAS type type SEMICOLON
+		| type_creation;
 
-expression ::= nested_id | numeric | STRING_LIT | CHAR_LIT | BOOL_LIT | IDENT DOT LEN | expression operator expression | NOT expression | LPAR expression RPAR | function_call | LSQBRA expressions RSQBRA | LSQBRA RSQBRA | nested_id index | IDENT IN nested_id | LCRBRA key_vals RCRBRA | LCRBRA RCRBRA;
+expression ::= nested_id 
+		| numeric 
+		| STRING_LIT 
+		| CHAR_LIT 
+		| BOOL_LIT 
+		| IDENT DOT LEN 
+		| expression operator expression 
+		| NOT expression 
+		| LPAR expression RPAR 
+		| function_call 
+		| LSQBRA expressions RSQBRA 
+		| LSQBRA RSQBRA 
+		| nested_id index 
+		| IDENT IN nested_id 
+		| LCRBRA key_vals RCRBRA 
+		| LCRBRA RCRBRA;
 
-operator ::= PLUS | MINUS | DIV | MOD | POWER | EQ | LEQ | GEQ | LT | GT | AND | OR | DOUBLECOLON | IMPLICATION | MULT | NEQ;
+operator ::= PLUS 
+		| MINUS 
+		| DIV 
+		| MOD 
+		| POWER 
+		| EQ 
+		| LEQ 
+		| GEQ 
+		| LT 
+		| GT 
+		| AND 
+		| OR 
+		| DOUBLECOLON 
+		| IMPLICATION 
+		| MULT 
+		| NEQ;
 
-numeric ::= PINT_LIT | NINT_LIT | PFLOAT_LIT | NFLOAT_LIT | PRAT_LIT | NRAT_LIT | NULL;
+numeric ::= PINT_LIT 
+		| NINT_LIT 
+		| PFLOAT_LIT 
+		| NFLOAT_LIT 
+		| PRAT_LIT 
+		| NRAT_LIT 
+		| NULL;
 
-function_call ::= IDENT LPAR expressions RPAR SEMICOLON | IDENT LPAR RPAR SEMICOLON | QM BOOL_LIT QM IDENT LPAR expressions RPAR SEMICOLON | QM BOOL_LIT QM IDENT LPAR RPAR SEMICOLON;
+function_call ::= IDENT LPAR expressions RPAR SEMICOLON 
+		| IDENT LPAR RPAR SEMICOLON 
+		| QM BOOL_LIT QM IDENT LPAR expressions RPAR SEMICOLON 
+		| QM BOOL_LIT QM IDENT LPAR RPAR SEMICOLON;
 
-nested_id ::= IDENT | nested_id DOT IDENT;
+nested_id ::= IDENT 
+		| nested_id DOT IDENT;
 
-null_expression ::= expression | ;
+null_expression ::= expression 
+		| ;
 
-index ::= LSQBRA expression RSQBRA | LSQBRA null_expression TYPESPEC null_expression RSQBRA | index LSQBRA expression RSQBRA | index LSQBRA null_expression TYPESPEC null_expression RSQBRA;
+index ::= LSQBRA expression RSQBRA 
+		| LSQBRA null_expression TYPESPEC null_expression RSQBRA 
+		| index LSQBRA expression RSQBRA 
+		| index LSQBRA null_expression TYPESPEC null_expression RSQBRA;
 
-key_vals ::= expression TYPESPEC expression | key_vals COMMA expression TYPESPEC expression;
+key_vals ::= expression TYPESPEC expression 
+		|  key_vals COMMA expression TYPESPEC expression;
