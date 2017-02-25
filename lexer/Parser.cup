@@ -90,8 +90,11 @@ statement ::= null_expression SEMICOLON
 		| nested_id ASSIGN expression SEMICOLON 
 		| PRINT expression SEMICOLON 
 		| READ nested_id SEMICOLON 
-		| START_IF LPAR expression RPAR THEN statements END_IF 
+		| START_IF LPAR expression RPAR THEN statements END_IF
+		| START_IF LPAR expression RPAR THEN break END_IF
 		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF 
+		| START_IF LPAR expression RPAR THEN break ELSE statements END_IF
+		| START_IF LPAR expression RPAR THEN statements ELSE break END_IF  
 		| LOOP_START statements BREAK SEMICOLON statements LOOP_END 
 		| LOOP_START statements BREAK PINT_LIT SEMICOLON statements LOOP_END 
 		| LOOP_START statements LOOP_END
@@ -99,6 +102,9 @@ statement ::= null_expression SEMICOLON
 		| RETURN expression SEMICOLON 
 		| ALIAS type type SEMICOLON
 		| type_creation;
+
+
+break ::= BREAK SEMICOLON;
 
 expression ::= nested_id 
 		| numeric 
