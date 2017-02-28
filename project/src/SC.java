@@ -1,6 +1,9 @@
 import java.io.FileReader;
 import java.io.FileNotFoundException;
-import java_cup.runtime.Symbol;
+import java.io.IOException;
+import java.io.StringReader;
+
+import java_cup.runtime.*;
 
 class SC {
     public static void main(String[] args) {
@@ -16,8 +19,8 @@ class SC {
 				
 				
 			} catch (Exception e) {
-				// TODO comment out e.printStackTrace() before submitting this has been uncommented to look out for java errors
-				e.printStackTrace();
+				// Commented out because this output is uniformative.  ETB
+				//e.printStackTrace();
 			}
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
