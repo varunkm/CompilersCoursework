@@ -33,11 +33,8 @@ Char = \'({Letter}|{Punctuation}|{Digit})\'
 String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
 PInteger = (0|([1-9]({Digit})*))
-NInteger = -{PInteger}
 PFloat = {PInteger}\.({Digit}({Digit})*)
-NFloat = -{PFloat}
 PRational = ({PInteger}\/([1-9]([0-9])*))|({PInteger}_(([1-9]([0-9])*)\/([1-9]([0-9])*)))
-NRational = -{PRational}
 Comment = {SLComment}|{MLComment}
 
 %%
@@ -81,6 +78,7 @@ Comment = {SLComment}|{MLComment}
 
 	"read"            { return symbol(sym.READ); }
 	"print"           { return symbol(sym.PRINT); }
+        "in"              { return symbol(sym.IN); }
 
 	"bool"            { return symbol(sym.BOOL); }
 	"int"             { return symbol(sym.INT); }
@@ -102,15 +100,12 @@ Comment = {SLComment}|{MLComment}
 
 	"null"            { return symbol(sym.NULL); }
 	T|F               { return symbol(sym.BOOL_LIT, yytext()); }
-	{Char} 	 		  { return symbol(sym.CHAR_LIT, yytext()); }
-    {String}          { return symbol(sym.STRING_LIT, yytext()); }
-	{PInteger}		  { return symbol(sym.PINT_LIT, yytext()); }
-	{PFloat}		  { return symbol(sym.PFLOAT_LIT, yytext()); }
+	{Char} 	 	  { return symbol(sym.CHAR_LIT, yytext()); }
+        {String}          { return symbol(sym.STRING_LIT, yytext()); }
+	{PInteger}	  { return symbol(sym.PINT_LIT, yytext()); }
+	{PFloat}	  { return symbol(sym.PFLOAT_LIT, yytext()); }
 	{PRational} 	  { return symbol(sym.PRAT_LIT, yytext()); }
-	{NInteger}		  { return symbol(sym.NINT_LIT, yytext()); }
-	{NFloat}		  { return symbol(sym.NFLOAT_LIT, yytext()); }
-	{NRational} 	  { return symbol(sym.NRAT_LIT, yytext()); }
-
+	
 	{Identifier}      { return symbol(sym.IDENT); }
 }
 

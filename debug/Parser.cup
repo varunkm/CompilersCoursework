@@ -27,7 +27,7 @@ scan with
 	return lexer.next_token();
 :};
 
-terminal MAIN, NULL, BOOL_LIT, NINT_LIT, NRAT_LIT, NFLOAT_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_LIT, BOOL, CHAR, INT, RAT, FLOAT, TOP, DICT, SEQ, TDEF, FDEF, ALIAS, START_IF, END_IF, ELSE, THEN, READ, PRINT, RETURN, LEN, LEQ, LT, GEQ, GT, IMPLICATION, EQ, NEQ, LCRBRA, RCRBRA, LSQBRA, RSQBRA, TYPESPEC, SEMICOLON, PLUS, MINUS, MULT, DIV, POWER, MOD, NOT, AND, OR, DOUBLECOLON, IN, IDENT, COMMA, LPAR, RPAR, DOT, LOOP_START, LOOP_END, BREAK, ASSIGN, QM;
+terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_LIT, BOOL, CHAR, INT, RAT, FLOAT, TOP, DICT, SEQ, TDEF, FDEF, ALIAS, START_IF, END_IF, ELSE, THEN, READ, PRINT, RETURN, LEN, LEQ, LT, GEQ, GT, IMPLICATION, EQ, NEQ, LCRBRA, RCRBRA, LSQBRA, RSQBRA, TYPESPEC, SEMICOLON, PLUS, MINUS, MULT, DIV, POWER, MOD, NOT, AND, OR, DOUBLECOLON, IN, IDENT, COMMA, LPAR, RPAR, DOT, LOOP_START, LOOP_END, BREAK, ASSIGN, QM;
 
 terminal BADCHAR;
 
@@ -46,7 +46,7 @@ start_state ::= functions main functions;
 functions ::= functions func 
 		| functions decleration 
 		| functions type_creation 
-		| functions alias 
+		| functions alias
 		| ;
 
 main ::= MAIN LCRBRA statements RCRBRA SEMICOLON;
@@ -70,7 +70,7 @@ alias ::= ALIAS type IDENT SEMICOLON;
 statements ::= statements statement 
 		| statement;
 
-args ::= IDENT TYPESPEC type 
+args ::= IDENT TYPESPEC type
 		| args COMMA IDENT TYPESPEC type;
 
 type ::= INT 
@@ -94,20 +94,18 @@ statement ::= null_expression SEMICOLON
 		| PRINT expression SEMICOLON 
 		| READ nested_id SEMICOLON 
 		| START_IF LPAR expression RPAR THEN statements END_IF
-		| START_IF LPAR expression RPAR THEN break END_IF
-		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF 
-		| START_IF LPAR expression RPAR THEN break ELSE statements END_IF
-		| START_IF LPAR expression RPAR THEN statements ELSE break END_IF  
-		| LOOP_START statements BREAK SEMICOLON statements LOOP_END 
-		| LOOP_START statements BREAK PINT_LIT SEMICOLON statements LOOP_END 
+		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF
 		| LOOP_START statements LOOP_END
                 | RETURN SEMICOLON
 		| RETURN expression SEMICOLON 
 		| ALIAS type type SEMICOLON
-		| type_creation;
+                | break
+		| type_creation
+                | error SEMICOLON;
 
 
-break ::= BREAK SEMICOLON;
+break ::= BREAK SEMICOLON
+          | BREAK PINT_LIT SEMICOLON;
 
 expression ::= nested_id 
 		| numeric 
@@ -144,20 +142,22 @@ operator ::= PLUS
 		| NEQ;
 
 numeric ::= PINT_LIT 
-		| NINT_LIT 
 		| PFLOAT_LIT 
-		| NFLOAT_LIT 
-		| PRAT_LIT 
-		| NRAT_LIT 
+		| PRAT_LIT
+                | MINUS PINT_LIT
+                | MINUS PFLOAT_LIT
+                | MINUS PRAT_LIT
 		| NULL;
-
-function_call ::= IDENT LPAR expressions RPAR SEMICOLON 
-		| IDENT LPAR RPAR SEMICOLON 
-		| QM BOOL_LIT QM IDENT LPAR expressions RPAR SEMICOLON 
-		| QM BOOL_LIT QM IDENT LPAR RPAR SEMICOLON;
+              
+function_call ::= IDENT LPAR expressions RPAR 
+		| IDENT LPAR RPAR 
+		| QM BOOL_LIT QM IDENT LPAR expressions RPAR
+		| QM BOOL_LIT QM IDENT LPAR RPAR
+                | QM nested_id QM IDENT LPAR expressions RPAR
+		| QM nested_id QM IDENT LPAR RPAR;
 
 nested_id ::= IDENT 
-		| nested_id DOT IDENT;
+		| IDENT DOT nested_id;
 
 null_expression ::= expression 
 		| ;

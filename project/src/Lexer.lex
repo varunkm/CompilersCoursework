@@ -21,7 +21,6 @@ import java_cup.runtime.*;
 
 Digit = [0-9]
 Letter = [a-zA-Z]
-TypeSpec = :
 SLComment = #({NotLineTerminator})*{LineTerminator}
 LineTerminator = \r|\n|\r\n|\n\r
 NotLineTerminator = [^\r\n\r\n]
@@ -29,19 +28,18 @@ MLComment = \/#(.|{LineTerminator})*#\/
 Whitespace = {LineTerminator} | [ \t\f]
 Underscore = _
 Punctuation = [ !#\"\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
+Punctuation_Str = [ !#\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 Char = \'({Letter}|{Punctuation}|{Digit})\'
-String = \"({Letter}|{Punctuation}|{Digit})*\"
+String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
 PInteger = (0|([1-9]({Digit})*))
-NInteger = -{PInteger}
 PFloat = {PInteger}\.({Digit}({Digit})*)
-NFloat = -{PFloat}
 PRational = ({PInteger}\/([1-9]([0-9])*))|({PInteger}_(([1-9]([0-9])*)\/([1-9]([0-9])*)))
-NRational = -{PRational}
 Comment = {SLComment}|{MLComment}
 
 %%
 <YYINITIAL> {
+	{Whitespace}      {/* Do nothing! */}
 	{Comment} 	  	  {/* Do nothing! */}
 	"."				  { return symbol(sym.DOT); }
 	";"               { return symbol(sym.SEMICOLON); }
@@ -61,7 +59,7 @@ Comment = {SLComment}|{MLComment}
 	"<="              { return symbol(sym.LEQ); }
 	">="			  { return symbol(sym.GEQ); }
 	"=>"              { return symbol(sym.IMPLICATION); }
-	"="              { return symbol(sym.EQ); }
+	"="               { return symbol(sym.EQ); }
 	"!="              { return symbol(sym.NEQ); }
 	"<"               { return symbol(sym.LT); }
 	">"				  { return symbol(sym.GT); }
@@ -70,6 +68,7 @@ Comment = {SLComment}|{MLComment}
 	"!"               { return symbol(sym.NOT); }
 	"::"			  { return symbol(sym.DOUBLECOLON); }
 	"?"				  { return symbol(sym.QM); }
+	":"               { return symbol(sym.TYPESPEC); }
 
 	"fdef"            { return symbol(sym.FDEF); }
 	"main"            { return symbol(sym.MAIN); }
@@ -79,6 +78,7 @@ Comment = {SLComment}|{MLComment}
 
 	"read"            { return symbol(sym.READ); }
 	"print"           { return symbol(sym.PRINT); }
+        "in"              { return symbol(sym.IN); }
 
 	"bool"            { return symbol(sym.BOOL); }
 	"int"             { return symbol(sym.INT); }
@@ -100,18 +100,13 @@ Comment = {SLComment}|{MLComment}
 
 	"null"            { return symbol(sym.NULL); }
 	T|F               { return symbol(sym.BOOL_LIT, yytext()); }
-	{Char} 	 		  { return symbol(sym.CHAR_LIT, yytext()); }
-        {String}                  { return symbol(sym.STRING_LIT, yytext()); }
-	{PInteger}		  { return symbol(sym.PINT_LIT, yytext()); }
-	{PFloat}		  { return symbol(sym.PFLOAT_LIT, yytext()); }
+	{Char} 	 	  { return symbol(sym.CHAR_LIT, yytext()); }
+        {String}          { return symbol(sym.STRING_LIT, yytext()); }
+	{PInteger}	  { return symbol(sym.PINT_LIT, yytext()); }
+	{PFloat}	  { return symbol(sym.PFLOAT_LIT, yytext()); }
 	{PRational} 	  { return symbol(sym.PRAT_LIT, yytext()); }
-	{NInteger}		  { return symbol(sym.NINT_LIT, yytext()); }
-	{NFloat}		  { return symbol(sym.NFLOAT_LIT, yytext()); }
-	{NRational} 	  { return symbol(sym.NRAT_LIT, yytext()); }
-
-	{Whitespace}      {/* Do nothing! */}
+	
 	{Identifier}      { return symbol(sym.IDENT); }
-	{TypeSpec}        { return symbol(sym.TYPESPEC); }
 }
 
 [^]  {
