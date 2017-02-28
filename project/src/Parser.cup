@@ -49,15 +49,16 @@ functions ::= functions func
 		| functions alias
 		| ;
 
-main ::= MAIN LCRBRA statements RCRBRA SEMICOLON;
+main ::= MAIN LCRBRA statements RCRBRA SEMICOLON
+                | MAIN LPAR RPAR LCRBRA statements RCRBRA SEMICOLON
+                | MAIN LPAR args RPAR LCRBRA statements RCRBRA SEMICOLON; 
 
 func ::= func_base TYPESPEC type SEMICOLON 
 	        | func_base SEMICOLON;
 
 func_base ::= FDEF IDENT LPAR args RPAR LCRBRA statements RCRBRA 
-		| FDEF IDENT LPAR RPAR LCRBRA statements RCRBRA 
-		| FDEF IDENT LPAR RPAR LCRBRA RCRBRA 
-		| FDEF IDENT LPAR args RPAR LCRBRA RCRBRA;
+		| FDEF IDENT LPAR RPAR LCRBRA statements RCRBRA;
+                
 
 decleration ::= IDENT TYPESPEC type SEMICOLON 
 		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
@@ -67,7 +68,7 @@ type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON
 
 alias ::= ALIAS type IDENT SEMICOLON;
 
-statements ::= statements statement 
+statements ::=  statement statements 
 		| statement;
 
 args ::= IDENT TYPESPEC type
@@ -102,6 +103,7 @@ statement ::= null_expression SEMICOLON
                 | break
 		| type_creation
                 | error SEMICOLON;
+                
 
 
 break ::= BREAK SEMICOLON
