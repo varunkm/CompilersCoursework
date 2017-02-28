@@ -43,10 +43,10 @@ precedence left LPAR, RPAR;
 
 start_state ::= functions main functions;
 
-functions ::= functions func 
-		| functions decleration 
-		| functions type_creation 
-		| functions alias
+functions ::= func functions
+		| decleration functions
+		| type_creation functions
+		| alias functions
 		| ;
 
 main ::= MAIN LCRBRA statements RCRBRA SEMICOLON
@@ -166,8 +166,8 @@ null_expression ::= expression
 
 index ::= LSQBRA expression RSQBRA 
 		| LSQBRA null_expression TYPESPEC null_expression RSQBRA 
-		| index LSQBRA expression RSQBRA 
-		| index LSQBRA null_expression TYPESPEC null_expression RSQBRA;
+		| LSQBRA expression RSQBRA index
+		| LSQBRA null_expression TYPESPEC null_expression RSQBRA index;
 
 key_vals ::= expression TYPESPEC expression 
-		|  key_vals COMMA expression TYPESPEC expression;
+		| expression TYPESPEC expression COMMA key_vals;

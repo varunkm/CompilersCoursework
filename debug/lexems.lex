@@ -94,9 +94,6 @@ Comment = {SLComment}|{MLComment}
 	{PInteger}		  { System.out.printf("PINT_LIT [%s]\n", yytext()); }
 	{PFloat}		  { System.out.printf("PFLOAT_LIT [%s]\n", yytext()); }
 	{PRational} 	  { System.out.printf("PRAT_LIT [%s]\n", yytext()); }
-	{NInteger}		  { System.out.printf("NINT_LIT [%s]\n", yytext()); }
-	{NFloat}		  { System.out.printf("NFLOAT_LIT [%s]\n", yytext()); }
-	{NRational} 	  { System.out.printf("NRAT_LIT [%s]\n", yytext()); }
 
 	{Identifier}      { System.out.printf("IDENT [%s]\n", yytext()); }
 	.				  { System.out.printf("UNIDENTIFIED [%s]\n", yytext()); }
