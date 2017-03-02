@@ -152,7 +152,7 @@ numeric ::= PINT_LIT
 		| NULL;
               
 function_call ::= QM expression QM IDENT LPAR expressions RPAR
-		| QM expression QM IDENT LPAR RPAR
+		| QM expression QM IDENT LPAR RPAR;
                 
 
 nested_id ::= IDENT 

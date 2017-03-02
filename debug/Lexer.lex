@@ -34,7 +34,8 @@ String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
 PInteger = (0|([1-9]({Digit})*))
 PFloat = {PInteger}\.({Digit}({Digit})*)
-PRational = ({PInteger}\/([1-9]([0-9])*))|({PInteger}_(([1-9]([0-9])*)\/([1-9]([0-9])*)))
+Fractional = {PInteger}({Whitespace})*\/({Whitespace})*([1-9]([0-9])*)
+PRational = ({Fractional})|{PInteger}({Whitespace})*({Underscore})({Whitespace})*({Fractional})
 Comment = {SLComment}|{MLComment}
 
 %%
