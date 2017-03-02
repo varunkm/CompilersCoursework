@@ -29,7 +29,7 @@ Whitespace = {LineTerminator} | [ \t\f]
 Underscore = _
 Punctuation = [ !#\"\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 Punctuation_Str = [ !#\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
-Char = \'({Letter}|{Punctuation}|{Digit})\'
+Char = \'({Letter}|{Punctuation}|{Digit})?\'
 String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
 PInteger = (0|([1-9]({Digit})*))
