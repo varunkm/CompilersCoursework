@@ -1,3 +1,3 @@
 main {
-    bool x = y z;
+    bool x := y z;
 };

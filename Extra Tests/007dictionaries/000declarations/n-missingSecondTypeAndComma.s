@@ -1,3 +1,3 @@
 main {
-    dict<int> d;
+    a : dict<int> := { 1:’1’, 2:’2’, 3:’3’ } ;
 };

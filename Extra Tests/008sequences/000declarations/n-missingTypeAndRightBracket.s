@@ -1,3 +1,3 @@
 main {
-   seq < s;
+   a : seq< ;
 };

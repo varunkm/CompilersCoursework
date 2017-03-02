@@ -1,3 +1,3 @@
 main {
-    dict<int, int> x = ;
+    a : dict<int, char> :=  ;
 };

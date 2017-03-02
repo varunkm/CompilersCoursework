@@ -1,3 +1,3 @@
 main {
-    dict <> d;
+    a: dict <> := {};
 };

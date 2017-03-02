@@ -1,3 +1,3 @@
 main {
-    dict<top, top> d = {'a':(3+4)};
+    a : dict<int, int> := { 1: 5+6} ;
 };

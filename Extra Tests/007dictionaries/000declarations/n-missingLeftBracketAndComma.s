@@ -1,3 +1,3 @@
 main {
-    dict int int > d;
+    a : dict int char> := { 1:’1’, 2:’2’, 3:’3’ } ;
 };

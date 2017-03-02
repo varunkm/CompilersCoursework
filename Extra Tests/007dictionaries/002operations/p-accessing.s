@@ -1,3 +1,3 @@
 main {
-    top x = y[z];
+    top x := y[z];
 };

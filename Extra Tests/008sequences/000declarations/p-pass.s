@@ -1,3 +1,3 @@
 main {
-   seq<int> s;
+   a : seq<int>;
 };
