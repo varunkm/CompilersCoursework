@@ -151,12 +151,9 @@ numeric ::= PINT_LIT
                 | MINUS PRAT_LIT
 		| NULL;
               
-function_call ::= IDENT LPAR expressions RPAR 
-		| IDENT LPAR RPAR 
-		| QM BOOL_LIT QM IDENT LPAR expressions RPAR
-		| QM BOOL_LIT QM IDENT LPAR RPAR
-                | QM nested_id QM IDENT LPAR expressions RPAR
-		| QM nested_id QM IDENT LPAR RPAR;
+function_call ::= QM expression QM IDENT LPAR expressions RPAR
+		| QM expression QM IDENT LPAR RPAR
+                
 
 nested_id ::= IDENT 
 		| IDENT DOT nested_id;
