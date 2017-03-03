@@ -1,3 +1,3 @@
 main {
-    bool x = 3 <= 4;
+    x : bool := 3 <= 4;
 };
