@@ -31,7 +31,7 @@ terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_
 
 terminal BADCHAR;
 
-nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, decleration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base;
+nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, decleration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base,indexs;
 
 precedence left OR, AND, NOT, IMPLICATION;
 precedence left EQ, NEQ, LT, LEQ, GT, GEQ;
@@ -156,15 +156,16 @@ function_call ::= QM expression QM IDENT LPAR expressions RPAR
 
 nested_id ::= IDENT 
 		|IDENT DOT nested_id
-		| nested_id index;
+		| nested_id indexs;
 
 null_expression ::= expression 
 		| ;
 
 index ::= LSQBRA expression RSQBRA 
-		| LSQBRA null_expression TYPESPEC null_expression RSQBRA 
-		| LSQBRA expression RSQBRA index
-		| LSQBRA null_expression TYPESPEC null_expression RSQBRA index;
+		| LSQBRA null_expression TYPESPEC null_expression RSQBRA;
+
+indexs ::= index indexs
+           | index;
 
 key_vals ::= expression TYPESPEC expression 
 		| expression TYPESPEC expression COMMA key_vals;
