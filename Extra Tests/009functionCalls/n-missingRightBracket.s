@@ -1,3 +1,3 @@
 main {
-    funccall(3;
+    ?T?funccall(3;
 };
