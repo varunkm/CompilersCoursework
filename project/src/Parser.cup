@@ -31,7 +31,7 @@ terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_
 
 terminal BADCHAR;
 
-nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, decleration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base,indexs;
+nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base, indexs, declarations, func_body, decl_base;
 
 precedence left OR, AND, NOT, IMPLICATION;
 precedence left EQ, NEQ, LT, LEQ, GT, GEQ;
@@ -44,24 +44,32 @@ precedence left LPAR, RPAR;
 start_state ::= functions main functions;
 
 functions ::= func functions
-		| decleration functions
+		| declaration functions
 		| type_creation functions
 		| alias functions
 		| ;
 
-main ::= MAIN LCRBRA statements RCRBRA SEMICOLON
-                | MAIN LPAR RPAR LCRBRA statements RCRBRA SEMICOLON
-                | MAIN LPAR args RPAR LCRBRA statements RCRBRA SEMICOLON; 
+main ::= MAIN LCRBRA func_body RCRBRA SEMICOLON
+                | MAIN LPAR RPAR LCRBRA func_body RCRBRA SEMICOLON
+                | MAIN LPAR args RPAR LCRBRA func_body RCRBRA SEMICOLON; 
 
 func ::= func_base TYPESPEC type SEMICOLON 
 	        | func_base SEMICOLON;
 
-func_base ::= FDEF IDENT LPAR args RPAR LCRBRA statements RCRBRA 
-		| FDEF IDENT LPAR RPAR LCRBRA statements RCRBRA;
-                
+func_base ::= FDEF IDENT LPAR args RPAR LCRBRA func_body RCRBRA 
+		| FDEF IDENT LPAR RPAR LCRBRA func_body RCRBRA;
 
-decleration ::= IDENT TYPESPEC type SEMICOLON 
-		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
+func_body ::= declarations statements
+                | declarations
+                | statements;
+
+declaration ::=  SEMICOLON 
+		| ASSIGN expressions SEMICOLON;
+
+decl_base ::= IDENT TYPESPEC type;
+
+declarations ::= decl_base declaration declarations
+                | decl_base declaration;
 
 type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON 
 		| TDEF IDENT LCRBRA RCRBRA SEMICOLON;
@@ -81,7 +89,8 @@ type ::= INT
 		| CHAR 
 		| DICT LT type COMMA type GT 
 		| DICT LT TOP COMMA type GT 
-		| DICT LT type COMMA TOP GT 
+		| DICT LT type COMMA TOP GT
+                | DICT LT TOP COMMA TOP GT     
 		| SEQ LT type GT 
 		| SEQ LT TOP GT 
 		| IDENT;
@@ -90,7 +99,6 @@ expressions ::= expression
 		| expressions COMMA expression;
 
 statement ::= null_expression SEMICOLON 
-		| decleration 
 		| nested_id ASSIGN expression SEMICOLON 
 		| PRINT expression SEMICOLON 
 		| READ nested_id SEMICOLON 
@@ -155,8 +163,8 @@ function_call ::= QM expression QM IDENT LPAR expressions RPAR
                 
 
 nested_id ::= IDENT 
-		|IDENT DOT nested_id
-		| nested_id indexs;
+		| IDENT DOT nested_id
+		| IDENT indexs;
 
 null_expression ::= expression 
 		| ;
@@ -164,8 +172,8 @@ null_expression ::= expression
 index ::= LSQBRA expression RSQBRA 
 		| LSQBRA null_expression TYPESPEC null_expression RSQBRA;
 
-indexs ::= index indexs
-           | index;
-
+indexs ::= index
+                | index indexs;
+       
 key_vals ::= expression TYPESPEC expression 
 		| expression TYPESPEC expression COMMA key_vals;
