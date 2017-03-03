@@ -31,7 +31,7 @@ terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_
 
 terminal BADCHAR;
 
-nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base, indexs, declarations, func_body, decl_base;
+nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base, indexs, declarations, func_body;
 
 precedence left OR, AND, NOT, IMPLICATION;
 precedence left EQ, NEQ, LT, LEQ, GT, GEQ;
@@ -63,13 +63,11 @@ func_body ::= declarations statements
                 | declarations
                 | statements;
 
-declaration ::=  SEMICOLON 
-		| ASSIGN expressions SEMICOLON;
+declaration ::=  IDENT TYPESPEC type SEMICOLON 
+		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
 
-decl_base ::= IDENT TYPESPEC type;
-
-declarations ::= decl_base declaration declarations
-                | decl_base declaration;
+declarations ::=  declarations declaration
+                | declaration;
 
 type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON 
 		| TDEF IDENT LCRBRA RCRBRA SEMICOLON;
