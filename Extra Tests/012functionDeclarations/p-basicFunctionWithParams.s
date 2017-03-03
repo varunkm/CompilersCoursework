@@ -1,4 +1,5 @@
-fdef void x (int x) {int x = 0;};
+fdef x (x : int) {x : int := 0;} : int;
 
 main {
+	;
 };

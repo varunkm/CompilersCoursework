@@ -1,4 +1,5 @@
-tdef x {int x,};
+tdef x {x : int,};
 
 main {
+	;
 };

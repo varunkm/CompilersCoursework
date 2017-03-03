@@ -1,4 +1,5 @@
-fdef void x (,) {int x = 0;};
+fdef x (,) {x : int := 0;} : string;
 
 main {
+	;
 };

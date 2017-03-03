@@ -1,4 +1,6 @@
-fdef void x () {};
+fdef x () {};
+fdef y () {} : int;
 
 main {
+	;
 };

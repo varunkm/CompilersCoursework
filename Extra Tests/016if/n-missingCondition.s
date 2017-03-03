@@ -1,3 +1,3 @@
 main {
-    if then x = 0; fi
+    if then x := 0; fi
 };

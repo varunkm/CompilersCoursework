@@ -1,4 +1,5 @@
-fdef int x () {};
+fdef x () {} : int;
 
 main {
+	;
 };

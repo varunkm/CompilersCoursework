@@ -1,3 +1,3 @@
 main {
-    ident. = 0;
+    ident. := 0;
 };

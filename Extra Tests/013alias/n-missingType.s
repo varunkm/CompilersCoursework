@@ -1,4 +1,5 @@
-alias void;
+alias int;
 
 main {
+	;
 };

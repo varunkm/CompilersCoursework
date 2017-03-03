@@ -1,6 +1,7 @@
 tdef x {};
-tdef x {int x};
-tdef x {int x, int y};
+tdef x {x : int};
+tdef x {x : int, y : int};
 
 main {
+	;
 };

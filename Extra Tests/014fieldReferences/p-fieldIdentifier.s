@@ -1,3 +1,3 @@
 main {
-    ident.ident = 0;
+    ident.ident := 0;
 };

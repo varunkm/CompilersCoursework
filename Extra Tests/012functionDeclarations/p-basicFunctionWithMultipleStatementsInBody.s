@@ -1,4 +1,5 @@
-fdef void x (int x, int y) {int x = 0; int y = 1;};
+fdef x (x : int, y : int) {x : int := 0; y : int := 1;};
 
 main {
+	;
 };
