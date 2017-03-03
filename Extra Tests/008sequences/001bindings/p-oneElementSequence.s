@@ -1,3 +1,3 @@
 main {
-    seq<int> s = [0];
+    a : seq<int> := [0];
 };

@@ -1,3 +1,3 @@
 main {
-    seq<char> s = "hello";
+    s : seq<char> := "hello";
 };

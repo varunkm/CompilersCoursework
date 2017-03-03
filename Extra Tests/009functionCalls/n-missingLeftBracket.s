@@ -1,3 +1,3 @@
 main {
-    funccall 3);
+    ?F?funccall 3);
 };

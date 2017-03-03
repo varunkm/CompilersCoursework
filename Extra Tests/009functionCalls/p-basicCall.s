@@ -1,3 +1,3 @@
 main {
-    funccall(3,4);
+    ?boolcall(a)?funccall(3,4);
 };
