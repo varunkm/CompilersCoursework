@@ -23,4 +23,5 @@ fdef reverse (inseq : seq<top>) {
         i := i + 1;
      pool
      return outseq;
+     x : int := 1^-1;
 } : seq<top> ;

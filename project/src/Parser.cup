@@ -120,8 +120,7 @@ expression ::= nested_id
 		| LPAR expression RPAR 
 		| function_call 
 		| LSQBRA expressions RSQBRA 
-		| LSQBRA RSQBRA 
-		| nested_id index 
+		| LSQBRA RSQBRA  
 		| IDENT IN nested_id 
 		| LCRBRA key_vals RCRBRA 
 		| LCRBRA RCRBRA;
@@ -156,7 +155,8 @@ function_call ::= QM expression QM IDENT LPAR expressions RPAR
                 
 
 nested_id ::= IDENT 
-		| IDENT DOT nested_id;
+		|IDENT DOT nested_id
+		| nested_id index;
 
 null_expression ::= expression 
 		| ;

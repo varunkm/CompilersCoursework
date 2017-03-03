@@ -57,6 +57,7 @@ Comment = {SLComment}|{MLComment}
 	"*"               { return symbol(sym.MULT); }
 	"/"               { return symbol(sym.DIV); }
 	"%"               { return symbol(sym.MOD); }
+	"^"		  { return symbol(sym.POWER); }
 	"<="              { return symbol(sym.LEQ); }
 	">="			  { return symbol(sym.GEQ); }
 	"=>"              { return symbol(sym.IMPLICATION); }
