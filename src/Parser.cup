@@ -1,0 +1,181 @@
+import java_cup.runtime.*;
+
+action code
+{:
+
+:};
+
+parser code
+{:
+	public boolean syntaxErrors = false;
+
+	private Lexer lexer;
+
+	public Parser(Lexer lex) {
+		super(lex);
+	    lexer = lex;
+	}
+
+	public void syntax_error(Symbol current_token) {
+		report_error( "Syntax error at line " + (current_token.left+1) + ", column " + current_token.right+"\n", null);
+		syntaxErrors = true;
+	}
+:};
+
+scan with
+{:
+	return lexer.next_token();
+:};
+
+terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_LIT, BOOL, CHAR, INT, RAT, FLOAT, TOP, DICT, SEQ, TDEF, FDEF, ALIAS, START_IF, END_IF, ELSE, THEN, READ, PRINT, RETURN, LEN, LEQ, LT, GEQ, GT, IMPLICATION, EQ, NEQ, LCRBRA, RCRBRA, LSQBRA, RSQBRA, TYPESPEC, SEMICOLON, PLUS, MINUS, MULT, DIV, POWER, MOD, NOT, AND, OR, DOUBLECOLON, IN, IDENT, COMMA, LPAR, RPAR, DOT, LOOP_START, LOOP_END, BREAK, ASSIGN, QM;
+
+terminal BADCHAR;
+
+nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break,func_base, indexs, declarations, func_body;
+
+precedence left OR, AND, NOT, IMPLICATION;
+precedence left EQ, NEQ, LT, LEQ, GT, GEQ;
+precedence left DOUBLECOLON;
+precedence left PLUS, MINUS;
+precedence left DIV, MULT, MOD;
+precedence left POWER;
+precedence left LPAR, RPAR;
+
+start_state ::= functions main functions;
+
+functions ::= func functions
+		| declaration functions
+		| type_creation functions
+		| alias functions
+		| ;
+
+main ::= MAIN LCRBRA func_body RCRBRA SEMICOLON
+                | MAIN LPAR RPAR LCRBRA func_body RCRBRA SEMICOLON
+                | MAIN LPAR args RPAR LCRBRA func_body RCRBRA SEMICOLON; 
+
+func ::= func_base TYPESPEC type SEMICOLON 
+	        | func_base SEMICOLON;
+
+func_base ::= FDEF IDENT LPAR args RPAR LCRBRA func_body RCRBRA 
+		| FDEF IDENT LPAR RPAR LCRBRA func_body RCRBRA
+		| FDEF IDENT LPAR args RPAR LCRBRA RCRBRA 
+		| FDEF IDENT LPAR RPAR LCRBRA RCRBRA;
+
+func_body ::= declarations statements
+                | declarations
+                | statements;
+
+declaration ::=  IDENT TYPESPEC type SEMICOLON 
+		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
+
+declarations ::=  declarations declaration
+                | declaration;
+
+type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON 
+		| TDEF IDENT LCRBRA RCRBRA SEMICOLON;
+
+alias ::= ALIAS type IDENT SEMICOLON;
+
+statements ::=  statement statements 
+		| statement;
+
+args ::= IDENT TYPESPEC type
+		| args COMMA IDENT TYPESPEC type;
+
+type ::= INT 
+		| FLOAT 
+		| RAT 
+		| BOOL 
+		| CHAR 
+		| DICT LT type COMMA type GT 
+		| DICT LT TOP COMMA type GT 
+		| DICT LT type COMMA TOP GT
+                | DICT LT TOP COMMA TOP GT     
+		| SEQ LT type GT 
+		| SEQ LT TOP GT 
+		| IDENT;
+
+expressions ::= expression 
+		| expressions COMMA expression;
+
+statement ::= null_expression SEMICOLON 
+		| nested_id ASSIGN expression SEMICOLON 
+		| PRINT expression SEMICOLON 
+		| READ nested_id SEMICOLON 
+		| START_IF LPAR expression RPAR THEN statements END_IF
+		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF
+		| LOOP_START statements LOOP_END
+		| LOOP_START LOOP_END
+                | RETURN SEMICOLON
+		| RETURN expression SEMICOLON 
+		| ALIAS type type SEMICOLON
+                | break
+		| type_creation
+                | error SEMICOLON;
+                
+
+
+break ::= BREAK SEMICOLON
+          | BREAK PINT_LIT SEMICOLON;
+
+expression ::= nested_id 
+		| numeric 
+		| STRING_LIT 
+		| CHAR_LIT 
+		| BOOL_LIT 
+		| IDENT DOT LEN 
+		| expression operator expression 
+		| NOT expression 
+		| LPAR expression RPAR 
+		| function_call 
+		| LSQBRA expressions RSQBRA 
+		| LSQBRA RSQBRA  
+		| IDENT IN nested_id 
+		| LCRBRA key_vals RCRBRA 
+		| LCRBRA RCRBRA;
+
+operator ::= PLUS 
+		| MINUS 
+		| DIV 
+		| MOD 
+		| POWER 
+		| EQ 
+		| LEQ 
+		| GEQ 
+		| LT 
+		| GT 
+		| AND 
+		| OR 
+		| DOUBLECOLON 
+		| IMPLICATION 
+		| MULT 
+		| NEQ;
+
+numeric ::= PINT_LIT 
+		| PFLOAT_LIT 
+		| PRAT_LIT
+                | MINUS PINT_LIT
+                | MINUS PFLOAT_LIT
+                | MINUS PRAT_LIT
+		| NULL;
+              
+function_call ::= QM expression QM IDENT LPAR expressions RPAR
+		| QM expression QM IDENT LPAR RPAR;
+                
+
+nested_id ::= IDENT 
+		| IDENT DOT nested_id
+		| IDENT indexs
+		| IDENT indexs DOT nested_id;
+
+null_expression ::= expression 
+		| ;
+
+index ::= LSQBRA expression RSQBRA 
+		| LSQBRA null_expression TYPESPEC null_expression RSQBRA;
+
+indexs ::= index
+                | index indexs;
+       
+key_vals ::= expression TYPESPEC expression 
+		| expression TYPESPEC expression COMMA key_vals;
