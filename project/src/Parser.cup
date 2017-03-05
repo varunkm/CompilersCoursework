@@ -50,11 +50,11 @@ functions ::= func functions
 		| ;
 
 main ::= MAIN LCRBRA func_body RCRBRA SEMICOLON
-                | MAIN LPAR RPAR LCRBRA func_body RCRBRA SEMICOLON
-                | MAIN LPAR args RPAR LCRBRA func_body RCRBRA SEMICOLON; 
+        | MAIN LPAR RPAR LCRBRA func_body RCRBRA SEMICOLON
+        | MAIN LPAR args RPAR LCRBRA func_body RCRBRA SEMICOLON; 
 
 func ::= func_base TYPESPEC type SEMICOLON 
-	        | func_base SEMICOLON;
+	    | func_base SEMICOLON;
 
 func_base ::= FDEF IDENT LPAR args RPAR LCRBRA func_body RCRBRA 
 		| FDEF IDENT LPAR RPAR LCRBRA func_body RCRBRA
@@ -62,14 +62,14 @@ func_base ::= FDEF IDENT LPAR args RPAR LCRBRA func_body RCRBRA
 		| FDEF IDENT LPAR RPAR LCRBRA RCRBRA;
 
 func_body ::= declarations statements
-                | declarations
-                | statements;
+        | declarations
+        | statements;
 
 declaration ::=  IDENT TYPESPEC type SEMICOLON 
 		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
 
 declarations ::=  declarations declaration
-                | declaration;
+        | declaration;
 
 type_creation ::= TDEF IDENT LCRBRA args RCRBRA SEMICOLON 
 		| TDEF IDENT LCRBRA RCRBRA SEMICOLON;
@@ -90,7 +90,7 @@ type ::= INT
 		| DICT LT type COMMA type GT 
 		| DICT LT TOP COMMA type GT 
 		| DICT LT type COMMA TOP GT
-                | DICT LT TOP COMMA TOP GT     
+        | DICT LT TOP COMMA TOP GT     
 		| SEQ LT type GT 
 		| SEQ LT TOP GT 
 		| IDENT;
@@ -105,18 +105,15 @@ statement ::= null_expression SEMICOLON
 		| START_IF LPAR expression RPAR THEN statements END_IF
 		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF
 		| LOOP_START statements LOOP_END
-		| LOOP_START LOOP_END
-                | RETURN SEMICOLON
+		| break
+        | RETURN SEMICOLON
 		| RETURN expression SEMICOLON 
 		| ALIAS type type SEMICOLON
-                | break
 		| type_creation
-                | error SEMICOLON;
-                
-
+        | error SEMICOLON;
 
 break ::= BREAK SEMICOLON
-          | BREAK PINT_LIT SEMICOLON;
+        | BREAK PINT_LIT SEMICOLON;
 
 expression ::= nested_id 
 		| numeric 
@@ -154,9 +151,9 @@ operator ::= PLUS
 numeric ::= PINT_LIT 
 		| PFLOAT_LIT 
 		| PRAT_LIT
-                | MINUS PINT_LIT
-                | MINUS PFLOAT_LIT
-                | MINUS PRAT_LIT
+        | MINUS PINT_LIT
+        | MINUS PFLOAT_LIT
+        | MINUS PRAT_LIT
 		| NULL;
               
 function_call ::= QM expression QM IDENT LPAR expressions RPAR
@@ -175,7 +172,7 @@ index ::= LSQBRA expression RSQBRA
 		| LSQBRA null_expression TYPESPEC null_expression RSQBRA;
 
 indexs ::= index
-                | index indexs;
+        | index indexs;
        
 key_vals ::= expression TYPESPEC expression 
 		| expression TYPESPEC expression COMMA key_vals;

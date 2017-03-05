@@ -1,5 +1,6 @@
 main{
 	loop
+	;
 	pool
 
 	break;
