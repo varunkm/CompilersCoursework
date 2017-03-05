@@ -32,7 +32,7 @@ Punctuation_Str = [ !#\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 Char = \'({Letter}|{Punctuation}|{Digit})\'
 String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
-PInteger = (0|([1-9]({Digit})*))
+PInteger = {Digit}+
 PFloat = {PInteger}\.({Digit}({Digit})*)
 Fractional = {PInteger}({Whitespace})*\/({Whitespace})*([1-9]([0-9])*)
 PRational = ({Fractional})|{PInteger}({Whitespace})*({Underscore})({Whitespace})*({Fractional})

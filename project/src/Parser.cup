@@ -57,7 +57,9 @@ func ::= func_base TYPESPEC type SEMICOLON
 	        | func_base SEMICOLON;
 
 func_base ::= FDEF IDENT LPAR args RPAR LCRBRA func_body RCRBRA 
-		| FDEF IDENT LPAR RPAR LCRBRA func_body RCRBRA;
+		| FDEF IDENT LPAR RPAR LCRBRA func_body RCRBRA
+		| FDEF IDENT LPAR args RPAR LCRBRA RCRBRA 
+		| FDEF IDENT LPAR RPAR LCRBRA RCRBRA;
 
 func_body ::= declarations statements
                 | declarations
@@ -103,6 +105,7 @@ statement ::= null_expression SEMICOLON
 		| START_IF LPAR expression RPAR THEN statements END_IF
 		| START_IF LPAR expression RPAR THEN statements ELSE statements END_IF
 		| LOOP_START statements LOOP_END
+		| LOOP_START LOOP_END
                 | RETURN SEMICOLON
 		| RETURN expression SEMICOLON 
 		| ALIAS type type SEMICOLON
@@ -162,7 +165,8 @@ function_call ::= QM expression QM IDENT LPAR expressions RPAR
 
 nested_id ::= IDENT 
 		| IDENT DOT nested_id
-		| IDENT indexs;
+		| IDENT indexs
+		| IDENT indexs DOT nested_id;
 
 null_expression ::= expression 
 		| ;

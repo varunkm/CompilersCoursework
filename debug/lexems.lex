@@ -17,7 +17,7 @@ Punctuation_Str = [ !#\$%&(\\')\(\)\*\+,-\.\/:;<=>\?@\\\[\]\^_`\{\}\|~]
 Char = \'({Letter}|{Punctuation}|{Digit})\'
 String = \"({Letter}|{Punctuation_Str}|{Digit}|\\\")*\"
 Identifier = {Letter}({Letter}|{Digit}|{Underscore})*
-PInteger = (0|([1-9]({Digit})*))
+PInteger = {Digit}+
 NInteger = -{PInteger}
 PFloat = {PInteger}\.({Digit}({Digit})*)
 NFloat = -{PFloat}
