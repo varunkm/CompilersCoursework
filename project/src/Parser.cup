@@ -129,7 +129,8 @@ expression ::= nested_id
 		| numeric 
 		| STRING_LIT 
 		| CHAR_LIT 
-		| BOOL_LIT 
+		| BOOL_LIT
+		| NULL 
 		| IDENT DOT LEN 
 		| expression operator expression 
 		| NOT expression 
