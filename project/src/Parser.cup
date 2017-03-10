@@ -31,7 +31,7 @@ terminal MAIN, NULL, BOOL_LIT, STRING_LIT, CHAR_LIT, PINT_LIT, PRAT_LIT, PFLOAT_
 
 terminal BADCHAR;
 
-nonterminal start_state, func, functions, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break_statements, break_statement, func_base, indexs, declarations, func_body;
+nonterminal start_state, func, statement, statements, expression, expressions, main, function_call, type, operator, declaration, key_vals, type_creation, args, index, numeric, nested_id, alias, null_expression,break_statements, break_statement, func_base, indexs, declarations, func_body;
 
 precedence left OR, AND, NOT, IMPLICATION;
 precedence left EQ, NEQ, LT, LEQ, GT, GEQ;
@@ -41,13 +41,10 @@ precedence left DIV, MULT, MOD;
 precedence left POWER;
 precedence left LPAR, RPAR;
 
-start_state ::= functions main functions;
-
-functions ::= func functions
-		| declaration functions
-		| type_creation functions
-		| alias functions
-		| ;
+start_state ::= declarations main declarations
+		| declarations main
+		| main declarations
+		| main;
 
 main ::= MAIN LCRBRA func_body RCRBRA SEMICOLON
         | MAIN LPAR RPAR LCRBRA func_body RCRBRA SEMICOLON
@@ -66,7 +63,10 @@ func_body ::= declarations statements
         | statements;
 
 declaration ::=  IDENT TYPESPEC type SEMICOLON 
-		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON;
+		| IDENT TYPESPEC type ASSIGN expressions SEMICOLON
+		| func
+		| type_creation
+		| alias;
 
 declarations ::=  declarations declaration
         | declaration;
@@ -107,8 +107,6 @@ statement ::= null_expression SEMICOLON
 		| LOOP_START break_statements LOOP_END
         | RETURN SEMICOLON
 		| RETURN expression SEMICOLON 
-		| ALIAS type type SEMICOLON
-		| type_creation
         | error SEMICOLON;
 
 break_statements ::= break_statement break_statements
@@ -125,8 +123,6 @@ break_statement ::= BREAK SEMICOLON
 		| LOOP_START break_statements LOOP_END
         | RETURN SEMICOLON
 		| RETURN expression SEMICOLON 
-		| ALIAS type type SEMICOLON
-		| type_creation
         | error SEMICOLON;
 
 expression ::= nested_id 
