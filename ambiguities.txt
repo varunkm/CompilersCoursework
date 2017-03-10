@@ -1,0 +1,14 @@
+AMBIGUITIES 
+Team 2
+ 
+PROBLEM: We are unsure whether "if" statements require boolean expressions such as "x==y" or allow for any expression that could possibly equate to a boolean value such as "1+1". 
+SOLUTION: Languages such as C,Java and Python allow for both cases hence we have taken the second case into consideration.
+
+PROBLEM: We are unsure whether the break being outside a loop is a semantic or syntactic issue.
+SOLUTION: We have considered it to be a syntax issue. If the syntax is break(2) and it is declared outside a loop then it is a semantic issue.
+
+PROBLEM: We are unsure whether the fact that keys in a dictionary should be a set is a syntactic or semantic issue.
+SOLUTION: We believe that this is a semantic issue since to check for uniqueness there should be a way of storing the keys and values and then checking every new key against these stored keys. At this stage we are only interested in ensuring that the user has provided source code that conforms to the grammar of the language, hence we believe that this is a semantic issue and therefore haven’t accounted for it.
+
+PROBLEM: We are unsure whether Z can have empty functions.
+SOLUTION: Despite other languages allowing for this, the Z specification states that the main function can not be empty. Due to this we have not allowed functions to be empty.
